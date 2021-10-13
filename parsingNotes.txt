@@ -1,0 +1,137 @@
+AASCRAPER PARSING
+
+
+GENDER
+    CASES OF “male|or|female"
+        male or female
+
+    Male
+
+    Male identifying
+
+    CASES INCLUDING “gender"
+        >Seeking Any Gender
+        >Seeking all gender identities
+
+    Female identifying
+
+    female-identifying
+
+    female
+
+
+ETHNICITY/RACE/NATIONALITY
+
+    CASES INCLUDING "ethnicit"
+        >all ethnicities
+        >Any Ethnicity
+        >Mixed Ethnicity
+
+    THE WORD “Descent"
+        >ESPECIALLY SEEKING SOUTH ASIAN OR MIDDLE EASTERN DESCENT
+
+    CASES WITH SEVERAL COMMAS
+        >African, East Asian, white, Hispanic
+        >African, white
+        >African, East Asian, white
+        >South Asian, Southeast Asian, Filipino, Pacific Islander
+        >South Asian, Mediterranean, Middle Eastern, Mixed Ethnicity, white, Filipino, Hispanic
+
+    >Filipino
+    >Mexican American
+
+
+
+    Black
+
+    African
+
+    Black, West Indies/Caribbean
+
+    white
+
+    Hispanic
+
+    Latinx
+
+    Italian
+
+    African, Black, Middle Eastern, Mixed Ethnicity, Hispanic female
+
+AGE
+Store a linked list of user’s possible ages userAges
+Return a linked list containing all possible ages for a role callAges
+If an int is on both lists, then return True for age match
+
+    CASES OF "##|to|##|years old"
+        >30 to 35 years old
+        >40 to 60 years old
+        >21 to 30 years old
+        ~33 to 60+ years old
+
+    CASES OF 0’s OR 0s
+        late 20’s/early 30’s
+        40’s+
+        50’s+
+        late 20’s to 40’s
+        Age 60s+
+
+    CASES INCLUDING “+"
+        Adult (18+) to play 12-year-old
+
+    CASES INCLUDING “-“
+        8-13 years old
+
+VOICE
+
+    Tenor (D3-B4)
+
+    Voice: MEZZO SOPRANO/SOPRANO
+
+    Voice: ALTO/BASS
+
+    VOICE: SOPRANO
+
+ACCENT
+    Must perform an East African/Kenyan accent
+    This character must perform an East African/Kenyan accent
+
+
+EXAMPLES OF FULL CALLS:
+    30 to 45 years old, African, East Asian, white, Hispanic male or female.
+
+    30 to 45 years old, African, white male or female
+
+    30 to 45 years old, African, East Asian, white, Hispanic male or female
+
+    45 to 55 years old, Filipino female
+
+    9 to 12 years old, male. Mexican American
+
+    30 to 50 years old, male. All ethnicities
+
+    9 to 13 years old, all ethnicities female
+
+    30 to 40 years old, all ethnicities male
+
+    White Woman in her 30’s
+
+    Black Male in his 30’s
+
+    35-60, should be athletic and good looking, all ethnicities male or female
+
+    18 to 99 years old, all ethnicities male or female
+
+    35 to 65 years old, all ethnicities male or female
+
+    35 to 55 years old, Hispanic or Latino male
+
+    45 to 55 years old, South Asian, Southeast Asian, Filipino, Pacific Islander male
+
+    All ages over 18 years old, all ethnicities male or female
+
+    18 to 35 years old, Black, Mixed Ethnicity, Hispanic female
+
+    35 to 55 years old, South Asian, Mediterranean, Middle Eastern, Mixed Ethnicity, white, Filipino, Hispanic male
+
+    Age 60s+
