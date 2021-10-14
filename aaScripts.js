@@ -1,5 +1,5 @@
 
-// Onclick= attribute for every <a> tag displaying the character's name.
+// Onclick= attribute for every <a> tag displaying the character's name. Opens the window
 function selectPhoto(iid, bid, el) {
     var editcart = "";
     var winl = (screen.width - 800) / 2;
