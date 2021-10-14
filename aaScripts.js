@@ -1,6 +1,5 @@
-// This is a script extracted from the actorsaccess assets folder. It's the onclick= attribute
-// for the anchor element on each page.
 
+// Onclick= attribute for every <a> tag displaying the character's name.
 function selectPhoto(iid, bid, el) {
     var editcart = "";
     var winl = (screen.width - 800) / 2;
