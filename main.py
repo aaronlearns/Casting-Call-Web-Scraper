@@ -17,7 +17,9 @@ parserDate = dataDict["forDate"]
 
 def _recordData():
 
-    with open("data.csv","r") as file:
+    DataFileName = "runtimeData.csv"
+
+    with open(DataFileName,"r") as file:
         bottomLine = file.readlines()[-1]
         IDNumber = ""
         for char in bottomLine:    # Inch along the bottom line and pick up digits...
@@ -28,7 +30,7 @@ def _recordData():
 
         dataDict["ID"] = int(IDNumber) + 1 # The ID of this runtime is the previous + 1
 
-    with open("data.csv","a") as file:
+    with open(DataFileName,"a") as file:
         writer = csv.writer(file)
         writer.writerow(dataDict.values())
 
