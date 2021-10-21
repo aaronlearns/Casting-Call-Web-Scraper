@@ -356,12 +356,14 @@ testDescs = {
 ,
 26 : "30 to 40 years old, white male. Tied himself to a tree for the environment. Has been there a while and is disheveled."
 ,
-27: "25 to 35 years old, male. Think Madmen Ambitious. Charismatic. Cynical. Great hair. With a chip on his shoulder, Jack is a high-powered advertising executive gunning for his next score. Smooth with the ladies and emotionally distant, he’s not the guy you’d peg to don a red velvet suit and pass out toys to girls and boys. Jack goes from our anti-hero to our hero. Strong crooning tenor and ability to dance."
+27 : "25 to 35 years old, male. Think Madmen Ambitious. Charismatic. Cynical. Great hair. With a chip on his shoulder, Jack is a high-powered advertising executive gunning for his next score. Smooth with the ladies and emotionally distant, he’s not the guy you’d peg to don a red velvet suit and pass out toys to girls and boys. Jack goes from our anti-hero to our hero. Strong crooning tenor and ability to dance."
+,
+28 : "40 to 50 years old, white male. Attractive and confident. No arms tattoos."
 }
 
 
 example = USERVARS
-single = testDescs[27]
+single = testDescs[28]
 single = cleanString(single)
 # print(descUserMatched(example, single))
 
