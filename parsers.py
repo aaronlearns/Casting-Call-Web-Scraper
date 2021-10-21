@@ -38,14 +38,13 @@ The function itself returns data about the number of roles/calls matched for the
 from reader import descUserMatched
 
 def readAACall(href,inList,userSession):
-    # Gets the URL, then checks for session timeout and if so retries.
     types = (str,list,sessions.Session)
-    print(args = locals().keys())
-    for type in types:
-        pass
+    args = locals().keys()
+    for i,typ in enumerate(types):
+        if not isinstance(args[i],typ):
+            raise TypeError(f"readAACall {args[i]} must be a {typ}")
 
-    # print("inList :", inList)
-
+    # Gets the URL, then checks for session timeout and if so retries.
     desiredUrl = ROOTURL + href
     session = userSession
     s = session.get(desiredUrl)
@@ -143,11 +142,13 @@ def readAACall(href,inList,userSession):
     # print(names)
     # print("<>" * 30)
     return (newRolesAmount,newMatchedCallsAmount)
-print(readAACall("/projects/?view=breakdowns&breakdown=718453&region=32",[],requests.Session()))
+# print(readAACall("/projects/?view=breakdowns&breakdown=718453&region=32",[],requests.Session()))
 # print(readAACall('/projects/index.cfm?view=breakdowns&breakdown=720452&region=32',[],requests.Session()))
 # print("final:\n",readAACall('/projects/?view=breakdowns&breakdown=720768&region=32',[],requests.Session()))
 
 def parseActorsAccess(currentDate):
+    if not isinstance(currentDate,str):
+        raise TypeError("parseActorsAccess currentDate must be a string.")
 
     dataDict["forDate"] = currentDate
 
