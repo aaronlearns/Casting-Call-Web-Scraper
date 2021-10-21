@@ -5,74 +5,13 @@ from login import AAusername, AApassword
 
 import re
 
-from datetime import datetime
-
 from bs4 import BeautifulSoup
 
 from helpers import cleanString, countNestedListElements, getPageTitle
+from settings import ROOTURL, USERVARS, dataDict, REGIONNUM
 
 # A lot of the runtime data is gathered in the parsing process, which is why so much boiler-plate
 # information is here and not in the main.
-
-totalDateTime = str(datetime.now()) # datetime object which is split into two variables.
-rawDigitsTime = totalDateTime[11:]
-rawDigitsDate = totalDateTime[:10]
-# print("rawDigitsDate: ",rawDigitsDate)
-rawDate = rawDigitsDate[-2:]
-# print(rawDigitsDate[-2:])
-
-
-dataDict = {
-    "ID" : None
-    ,
-    "date" : rawDigitsDate
-    ,
-    "time" : rawDigitsTime
-    ,
-    "forDate" : rawDate
-    ,
-    "isMaxCalls" : False # This can read up to 25 calls on ActorsAccess. Did we reach that?
-    ,
-    "matchedRoles" : 0
-    ,
-    "matchedCalls" : 0
-}
-
-REGIONURLS = {
-    'LOS ANGELES' : '1',
-    'CHICAGO' : '4',
-    'South Central' : '7',
-    'Southeast' : '9',
-    'Pacific (Hawaii)' : '8',
-    'Rocky Mountains' : '10',
-    'Northwest' : '11',
-    'Central Atlantic' : '12',
-    'Atlantic Canada' : '13',
-    'Alberta' : '14',
-    'Canadian Praries' : '16',
-    'Midwest' : '19',
-    'New England' : '20',
-    'North Central' : '21',
-    'Northwest Territories' : '22',
-    'Nunavut' : '23',
-    'Quebec' : '24',
-    'San Francisco / NorCal' : '25',
-    'TORONTO' : '26',
-    'VANCOUVER' : '27',
-    'Yukon' : '28',
-    'NEW YORK' : '32',
-}
-USERREGION = "NEW YORK"
-USERRACE = ["white", "caucasian"]
-USERAGE = range(17,26)
-# print(USERAGE)
-USERGENDER = ["male","man"]
-USERVARS = [USERRACE,USERGENDER,USERAGE]
-
-REGIONNUM = REGIONURLS[USERREGION]
-
-ROOTURL = "https://actorsaccess.com"
-
 def AACallIsToday(callPage, globalDay):
     # print("Checking whether a call was today...")
     soup = BeautifulSoup(callPage.text, 'html.parser')
@@ -100,10 +39,10 @@ from reader import descUserMatched
 
 def readAACall(href,inList,userSession):
     # Gets the URL, then checks for session timeout and if so retries.
-    typeBools = (type(href) == str, type(inList) == list, type(userSession) == sessions.Session)
-    if not all(typeBools):
-        print(typeBools)
-        raise TypeError("Usage Types: readAACall(string, list, sessions.Session)")
+    types = (str,list,sessions.Session)
+    print(args = locals().keys())
+    for type in types:
+        pass
 
     # print("inList :", inList)
 
@@ -204,7 +143,7 @@ def readAACall(href,inList,userSession):
     # print(names)
     # print("<>" * 30)
     return (newRolesAmount,newMatchedCallsAmount)
-# print(readAACall("/projects/?view=breakdowns&breakdown=718453&region=32",[],requests.Session()))
+print(readAACall("/projects/?view=breakdowns&breakdown=718453&region=32",[],requests.Session()))
 # print(readAACall('/projects/index.cfm?view=breakdowns&breakdown=720452&region=32',[],requests.Session()))
 # print("final:\n",readAACall('/projects/?view=breakdowns&breakdown=720768&region=32',[],requests.Session()))
 
