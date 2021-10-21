@@ -2,7 +2,7 @@ import re
 import math
 
 from helpers import cleanString
-from parsers import USERVARS
+from settings import USERVARS
 
 # ORDER IS ALWAYS [RACE, GENDER, AGE]
 
