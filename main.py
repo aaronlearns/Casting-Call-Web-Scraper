@@ -2,6 +2,7 @@ import csv
 from datetime import date
 import smtplib
 from email.mime.text import MIMEText
+from typing import Type
 from parsers import dataDict, parseActorsAccess, ROOTURL
 
 parserDate = dataDict["forDate"]
@@ -37,6 +38,13 @@ def _recordData():
 # You need to allow unidentified apps on an email to use SMTP, ergo uses dummy email for safety
 USEREMAIL = "aaronlearns39@gmail.com"
 def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
+        if not isinstance(text,str):
+            raise TypeError("_sendEmail text must be a string")
+        elif not isinstance(date,str):
+            raise TypeError("_sendEmail date must be a string.")
+        elif not isinstance(useremail,str):
+            raise TypeError("_sendEmail useremail must be a string.")
+
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
 
@@ -72,8 +80,12 @@ def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
 def main(forDate=parserDate,sendEmail=True,recordData=True):
 
     # forDate works best as a string, because single-digit dates are found as 01, 02 etc.
-    if (type(forDate) != str) or (type(sendEmail) != bool):
-        raise Exception("\nUsage of main() parameters: fordate - string and sendEmail - bool\n")
+    if not isinstance(forDate, str):
+        raise TypeError("main() forDate must be a string.")
+    elif not isinstance(sendEmail, bool):
+        raise TypeError("main() sendEmail must be a boolean.")
+    elif not isinstance(recordData, bool):
+        raise TypeError("main() recordData must be a boolean.")
     
     print('parsing website(s)...')
     AAmatchedDescs = parseActorsAccess(forDate)
