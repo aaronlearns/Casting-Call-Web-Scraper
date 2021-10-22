@@ -134,8 +134,7 @@ raceRegs = [
 "(african)","(european)",
 
 # Nations / Regions
-"(chinese)","(japanese)","(korean)","(filipino)","(dominican)","(cuban)","(mexican)","(carribean)",
-"(pacific islander)","(hawaiian)","(nuyorican)",
+"(chinese)","(japanese)","(korean)","(filipino)","(dominican)","(cuban)","(mexican)","(carribean)", "(pacific islander)","(hawaiian)","(nuyorican)", "(puerto[\s-]rican)"
 
 # Geographical locations hypenated with "American" and other hypenations
 "(middle[-|\s]eastern)","(\w+[-|\s]american)",
