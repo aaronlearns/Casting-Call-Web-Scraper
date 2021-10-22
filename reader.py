@@ -59,7 +59,7 @@ def doListsIntersect(a, b):
 # print(doListsIntersect(first,second))
 
 """
-shiftRegexLists akes a in-list of regular expressions (regexes) 
+shiftRegexLists takes an in-list of regular expressions (regexes) 
 and appends all matches from a parent string to an outlist.
 
 Each element in the outlist is a list in its own, the first element being the match
@@ -134,7 +134,7 @@ raceRegs = [
 "(african)","(european)",
 
 # Nations / Regions
-"(chinese)","(japanese)","(korean)","(filipino)","(dominican)","(cuban)","(mexican)","(carribean)", "(pacific islander)","(hawaiian)","(nuyorican)", "(puerto[\s-]rican)"
+"(chinese)","(japanese)","(korean)","(filipino)","(dominican)","(cuban)","(mexican)","(carribean)", "(pacific islander)","(hawaiian)","(nuyorican)", "(puerto[\s-]rican)",
 
 # Geographical locations hypenated with "American" and other hypenations
 "(middle[-|\s]eastern)","(\w+[-|\s]american)",
