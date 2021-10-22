@@ -39,7 +39,7 @@ from reader import descUserMatched
 
 def readAACall(href,inList,userSession):
     types = (str,list,sessions.Session)
-    args = locals().keys()
+    args = (href,inList,userSession)
     for i,typ in enumerate(types):
         if not isinstance(args[i],typ):
             raise TypeError(f"readAACall {args[i]} must be a {typ}")
