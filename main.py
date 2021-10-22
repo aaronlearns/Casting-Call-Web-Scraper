@@ -1,9 +1,7 @@
-import csv
-from datetime import date
-import smtplib
-from email.mime.text import MIMEText
+
 from typing import Type
 from parsers import dataDict, parseActorsAccess, ROOTURL
+from helpers import _sendEmail, _recordData
 
 parserDate = dataDict["forDate"]
 
@@ -15,67 +13,6 @@ parserDate = dataDict["forDate"]
 # day = daychars[rawDayNumber] # Variable 'day' is a two char string, ex. 'we'
 
 # print(dataDict["date"],dataDict['time'])
-
-def _recordData():
-
-    DataFileName = "runtimeData.csv"
-
-    with open(DataFileName,"r") as file:
-        bottomLine = file.readlines()[-1]
-        IDNumber = ""
-        for char in bottomLine:    # Inch along the bottom line and pick up digits...
-            if char.isdigit():
-                IDNumber += char
-            else: break    # ...until hitting a non-digit character.
-        # This is the ID number of the previous runtime.
-
-        dataDict["ID"] = int(IDNumber) + 1 # The ID of this runtime is the previous + 1
-
-    with open(DataFileName,"a") as file:
-        writer = csv.writer(file)
-        writer.writerow(dataDict.values())
-
-# You need to allow unidentified apps on an email to use SMTP, ergo uses dummy email for safety
-USEREMAIL = "aaronlearns39@gmail.com"
-def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
-        if not isinstance(text,str):
-            raise TypeError("_sendEmail text must be a string")
-        elif not isinstance(date,str):
-            raise TypeError("_sendEmail date must be a string.")
-        elif not isinstance(useremail,str):
-            raise TypeError("_sendEmail useremail must be a string.")
-
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-
-        serverEmail = 'jclay38craycray@gmail.com'
-        serverPassword = 's3c^h&*2@jl'
-        server.login(serverEmail,serverPassword)
-
-        months = ("January","February","March","April","May","June",
-        "July","August","September","October","November","December")
-
-        suffixes = ("st","nd","rd","th")
-        suffixNum = 3
-
-        dateString = dataDict["date"][-5:]
-        month = dateString[:2]
-        dateText = date
-        month = months[int(month) - 1]
-        
-        if int(dateText[1]) in [1,2,3] and int(dateText[0]) != 1:
-            suffixNum = int(dateText[1]) - 1 # If there's a 1, write '1st', 2 write '2nd' etc.
-        
-        if int(dateText) < 10:
-            dateText = dateText[1] # Prevent saying "october 08th" for single digit dates.
-
-        message = MIMEText('Your casting calls for today have come in! Here are the roles you\'ve matched:\n\n{}'.format(text))
-        message['Subject'] = "Your Casting calls for {} {}{}.".format(month,date,suffixes[suffixNum])
-
-
-        server.sendmail(serverEmail, useremail, message.as_string())
-        server.quit()
-
 
 def main(forDate=parserDate,sendEmail=True,recordData=True):
 
