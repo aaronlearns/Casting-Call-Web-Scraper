@@ -1,29 +1,3 @@
-from datetime import datetime
-
-totalDateTime = str(datetime.now()) # datetime object which is split into two variables.
-rawDigitsTime = totalDateTime[11:]
-rawDigitsDate = totalDateTime[:10]
-# print("rawDigitsDate: ",rawDigitsDate)
-rawDate = rawDigitsDate[-2:]
-# print(rawDigitsDate[-2:])
-
-
-dataDict = {
-    "ID" : None
-    ,
-    "date" : rawDigitsDate
-    ,
-    "time" : rawDigitsTime
-    ,
-    "forDate" : rawDate
-    ,
-    "isMaxCalls" : False # This can read up to 25 calls on ActorsAccess. Did we reach that?
-    ,
-    "matchedRoles" : 0
-    ,
-    "matchedCalls" : 0
-}
-
 REGIONURLS = {
     'LOS ANGELES' : '1',
     'CHICAGO' : '4',
