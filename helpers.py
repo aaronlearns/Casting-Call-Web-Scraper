@@ -6,7 +6,7 @@ from datetime import date
 import smtplib
 from email.mime.text import MIMEText
 
-from parsers import dataDict
+from settings import dataDict
 
 def cleanString(input):
     input = input.replace('®', 'reg')
