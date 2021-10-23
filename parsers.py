@@ -7,8 +7,8 @@ import re
 
 from bs4 import BeautifulSoup
 
-from helpers import cleanString, countNestedListElements, getPageTitle
-from settings import ROOTURL, USERVARS, dataDict, REGIONNUM
+from helpers import cleanString, countNestedListElements, getPageTitle, dataDict
+from settings import ROOTURL, USERVARS, REGIONNUM
 
 # A lot of the runtime data is gathered in the parsing process, which is why so much boiler-plate
 # information is here and not in the main.

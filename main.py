@@ -1,7 +1,7 @@
 
 from typing import Type
-from parsers import dataDict, parseActorsAccess, ROOTURL
-from helpers import _sendEmail, _recordData
+from parsers import parseActorsAccess, ROOTURL
+from helpers import _sendEmail, _recordData, dataDict
 
 parserDate = dataDict["forDate"]
 
