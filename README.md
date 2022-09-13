@@ -1,4 +1,7 @@
 # Actor Web Scraping
-Just me programming some webscrapers as an actor, this web scraper goes on Actors Access, parses web pages to find casting calls, and then read them and matches them to a user based on age, race and gender. Once the casting calls are matched, they are put into an email, which is then sent to the user.
-
-email.txt is a dummy file, which contains the text of the email to be sent.
+I look through a lot of casting calls as an actor, and I couldn't help but try to automate the process.  
+I made a web scraper to email me casting calls that I could apply to.  
+It requires a working ActorsAccess account, as well as two emails.  
+The first email is a server "dummy" email, which requires you to allow unidentified apps.  
+The second email is the client email.  
+Execute "python3 main.py" with the entire directory open.
