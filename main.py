@@ -28,14 +28,16 @@ def main(forDate=parserDate,sendEmail=True,recordData=True):
     AAmatchedDescs = parseActorsAccess(forDate)
     # matchedDescs_BS = parseBackstage
    
+    # The body of the email is written to a .txt file before getting sent out.     
     print('writing to files...')
     with open("email.txt", "w") as f:
+        # These are each of the matched casting calls        
         for descList in AAmatchedDescs:
             f.write("<>" * 30)
             f.write("\n")
             url = ROOTURL + descList[-1] # Compose URL to put in email
             texts = descList[0:-1] # Everything else is the [name,description] lists
-            for text in texts:
+            for text in texts: # List all of the individual matched roles inside the matched calls.
                 name = text[0]
                 description = text[1]
                 f.write("[ {} ]\n{}\n\n".format(name,description))
