@@ -199,75 +199,88 @@ def getDescAgeRange(desc):
     M_quicksort(descAgeRaw,0,len(descAgeRaw)-1)
     # print(descAgeRaw)
     descAgeRange = []
-    if descAgeRaw:
-        # print(descAgeRaw[0][0])
-        # print(descAgeRaw)
-        m = descAgeRaw[0]
-        # print("beg: ", beg)
-        hisAndLos = []
-        descAgeRaw = [descAgeRaw[0]]
-        for result in descAgeRaw:
-            m = result[0]
-            # print(m)
-            beg = m.start()
-            regexType = result[1]
-            lo = int(m.group(1))
-            hi = 0 
-            if regexType == 0:
-                hi = lo + 10
-                if desc[beg - 6: beg] == "early ":
-                    hi = hi - 5
-                    # print('early')
-                elif desc[beg - 5: beg] == "late ":
-                    lo = lo + 6
-                    # print('late')
-                elif desc[beg - 4: beg] == "mid ":
-                    lo = lo + 4
-                    hi = hi - 3
-                    # print('mid')
-            elif regexType == 1:
-                hi = m.group(2)
-            elif regexType == 2:
-                hi = (int(lo) * 2) - 7
-            elif regexType in [3,4,5] and beg < 50:
-                hi = lo + 3
-                lo = lo - 3
-            elif regexType == 6:
-                lo = 13
-                hi = 19
-            elif regexType == 7:
-                lo = 45
-                hi = 65
+    if not descAgeRaw:
+        raise Exception("Age regex results were returned improperly.\n\nDescription:\n{}".format(desc))
+    # print(descAgeRaw[0][0])
+    # print(descAgeRaw)
+    m = descAgeRaw[0]
+    # print("beg: ", beg)
 
-            if lo and hi:
-                lo = int(lo)
-                hi = int(hi)
-                # print("lo:",lo,"hi:",hi)
-                hisAndLos.append(lo)
-                hisAndLos.append(hi)
-        # print(hisAndLos)
-        if hisAndLos:
-            hisAndLos = sorted(hisAndLos)
-            kingHi = hisAndLos[-1]
-            kingLo = hisAndLos[0]
+    # Possible minima and maxima for the age range.
+    hisAndLos = []
 
-            # This would do some odd math to "soften" the boundaries of already large ranges.
-            # TODO MMDIP
+    descAgeRaw = [descAgeRaw[0]]
+    for result in descAgeRaw:
+        
+        # Information about the age as the regex found it, as well as how the age was expressed
+        # (depending on the regex that matched it).
+        m = result[0]
+        # print(m)
+        beg = m.start()
+        regexType = result[1]
+        
+        # Initial possible minimum and maximum
+        lo = int(m.group(1))
+        hi = 0
+        
+        # See ageRegs to see how different regex "types" mean the age is expresses differently.
+        if regexType == 0:
+            hi = lo + 10
+            # Interpretation of early 30s vs mid vs late 30s etc.
+            if desc[beg - 6: beg] == "early ":
+                hi = hi - 5
+                # print('early')
+            elif desc[beg - 5: beg] == "late ":
+                lo = lo + 6
+                # print('late')
+            elif desc[beg - 4: beg] == "mid ":
+                lo = lo + 4
+                hi = hi - 3
+                # print('mid')
+        elif regexType == 1:
+            hi = m.group(2)
+        elif regexType == 2:
+            hi = (int(lo) * 2) - 7
+        elif regexType in [3,4,5] and beg < 50:
+            hi = lo + 3
+            lo = lo - 3
+        # "Teenager"
+        elif regexType == 6:
+            lo = 13
+            hi = 19
+        # "Middle-aged"
+        elif regexType == 7:
+            lo = 45
+            hi = 65
+        
+        if lo and hi:
+            lo = int(lo)
+            hi = int(hi)
+            # print("lo:",lo,"hi:",hi)
+            hisAndLos.append(lo)
+            hisAndLos.append(hi)
+    # print(hisAndLos)
+    if hisAndLos:
+        hisAndLos = sorted(hisAndLos)
+        kingHi = hisAndLos[-1]
+        kingLo = hisAndLos[0]
 
-            # difference = (kingHi - kingLo)
-            # if difference >= 10:
-            #     rootRatio = .835
-            #     # print("rootRatio:",rootRatio)
-            #     diffRoot = math.floor(difference**rootRatio)
-            #     average = math.floor((kingLo + kingHi) / 2)
-            #     kingHi = average + diffRoot
-            #     kingLo = average - diffRoot
-            descAgeRange = range(kingLo,kingHi+1)
+        # This would do some odd math to "soften" the boundaries of already large ranges.
+        # difference = (kingHi - kingLo)
+        # if difference >= 10:
+        #     rootRatio = .835
+        #     # print("rootRatio:",rootRatio)
+        #     diffRoot = math.floor(difference**rootRatio)
+        #     average = math.floor((kingLo + kingHi) / 2)
+        #     kingHi = average + diffRoot
+        #     kingLo = average - diffRoot
+        descAgeRange = range(kingLo,kingHi+1)
     # print(descAgeRange)
     return descAgeRange
         
 # ||| ^^^ AGE ^^^ |||
 
+# Just an abstraction of everything above.
 def getDescData(desc):
     # print(desc)
     desc = desc.lower()
@@ -282,6 +295,7 @@ def getDescData(desc):
     # print(finalList,"\n")
     return finalList
 
+# Compares a user's variables to retrieved variables from a casting call, returns a Boolean.
 def descUserMatched(userData, desc):
     descData = getDescData(desc)
     # print("descData: ", descData, "userData: ", userData)
@@ -302,6 +316,7 @@ def descUserMatched(userData, desc):
     # if userM:print('desc matched for user')
     return userM
 
+# Everything testing related is here or below:
 testDescs = {
 1 : "Playing age 18 to 40 years old, all ethnicities female. Sensational singer/actor/dancers required to perform the SIX wives of Henry VIII as they reunite to tell their stories in the form of a pop concert."
 ,
