@@ -25,19 +25,17 @@ def AACallIsToday(callPage, globalDay):
 
     # print("character is: " + char)
 
-    if char == globalDay:
-        return True
-    else:
-        return False
+    return char == globalDay
 
 """
-The inList is matchedDescs, which can be found in parseActorsAccess.
+The inList is matchedDescs, which comes a specific struture can be found in parseActorsAccess.
 
 The function itself returns data about the number of roles/calls matched for the data file.
 """
 from reader import descUserMatched
 
 def readAACall(href,inList,userSession):
+    # Type checking
     types = (str,list,sessions.Session)
     args = (href,inList,userSession)
     for i,typ in enumerate(types):
@@ -60,6 +58,8 @@ def readAACall(href,inList,userSession):
     # print(soup.title)
     # print("<>" * 30)
 
+    # Finds the raw text of the casting call and converts it to a string. It's a continuous string of all the
+    # characters' names, each followed by a description of them ([ NAME ] \n description \n [ NAME ] \n description...)
     rawCall = ""
     for td in soup.select('td'):
         # print(td.attrs)    
@@ -71,13 +71,16 @@ def readAACall(href,inList,userSession):
     names = []
     # break
 
+    # Makes a soup object out of this text to be parsed and read.
     rawCallSoup = BeautifulSoup(rawCall, 'html.parser')
     # print(rawCallSoup)
     # print(rawCallSoup.text)
 
+    # This gets the name of the character being described, so if it's a match it can be sent in the email.
     nameRegex = re.compile("\[\s?(.+?)\s?\]")
     text = str(rawCallSoup.text)
 
+    # This is the actual getting of the name from the matched call.
     nameIter = re.finditer(nameRegex,text)
     nameMatchObjects = []
     for iterObject in nameIter:
@@ -100,6 +103,7 @@ def readAACall(href,inList,userSession):
     # print("<>" * 30)
 
 
+    # Checks to make sure the name/description formatting went correctly.
     if len(names) != len(descs):
         big = 'descriptions'
         small = 'names'
@@ -113,6 +117,7 @@ def readAACall(href,inList,userSession):
     matchedCalls = len(inList)
     currentRoles = int((countNestedListElements(inList) - matchedCalls) / 2)
  
+    # In a casting call, only some of the roles may be matched, the ones that do get appended to matchedDescsOnCall.
     matchedDescsOnCall = []
     for i,d in enumerate(descs):
         # print("description: ",d,"\nname: ",names[i])
@@ -141,17 +146,24 @@ def readAACall(href,inList,userSession):
     # print("<>" * 30)
     # print(names)
     # print("<>" * 30)
+    
+    # These get added to runtime.csv
     return (newRolesAmount,newMatchedCallsAmount)
 # print(readAACall("/projects/?view=breakdowns&breakdown=718453&region=32",[],requests.Session()))
 # print(readAACall('/projects/index.cfm?view=breakdowns&breakdown=720452&region=32',[],requests.Session()))
 # print("final:\n",readAACall('/projects/?view=breakdowns&breakdown=720768&region=32',[],requests.Session()))
 
+# Finds a casting call withing the Actor's Access site architecture
 def parseActorsAccess(currentDate):
+    
+    # Type checking
     if not isinstance(currentDate,str):
         raise TypeError("parseActorsAccess currentDate must be a string.")
 
+    # For runtime.csv
     dataDict["forDate"] = currentDate
 
+    # Logging in
     session = requests.Session()
     print("logging in...")
     # Log in and navigate to the calls page
@@ -159,12 +171,15 @@ def parseActorsAccess(currentDate):
     s = session.post('https://actorsaccess.com/index.cfm?login&loginSecure', data = login)
     s = session.get('https://actorsaccess.com/projects/index.cfm?region={}'.format(urllib.parse.quote_plus(REGIONNUM)))
 
+    # Getting the casting calls as they appear on the homepage.
     soup = BeautifulSoup(s.text, 'html.parser')
     callrows = soup.select('.element')
 
     # print(len(callrows))
     callHrefs = []
 
+    # Retrieving the hrefs to all the calls that were posted on this day (Actor's Access recommends you
+    # apply on the same day the call is posted).
     for row in callrows:
         regex = re.compile('">\d\d/(\d\d)/\d\d')
         rowDate = re.search(regex, str(row))
@@ -178,12 +193,14 @@ def parseActorsAccess(currentDate):
             # print(rowHref)
             callHrefs.append(rowHref)
     # print(len(callHrefs))
-      
+    
+    # Constructing the casting call page URLs from the retrieved hrefs
     for i,href in enumerate(callHrefs):
         gobacks = (len('region=' + REGIONNUM))
         callHrefs[i] = href[:-gobacks] + '&' + href[-gobacks:]    
     # print("callHrefs: ", callHrefs)
 
+    # Building a list of matched character descriptions which gets returned.
     matchedDescs = []
     if len(callHrefs) == 0:
         print("No calls posted today!")
@@ -200,6 +217,7 @@ def parseActorsAccess(currentDate):
     # print(matchedDescs)
     return matchedDescs
 
+# Never got to these :(
 def readBackstageCall():
     pass
 
