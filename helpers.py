@@ -8,6 +8,8 @@ from email.mime.text import MIMEText
 
 from datetime import datetime
 
+from login import USEREMAIL, SERVEREMAIL, SERVERPASSWORD
+
 totalDateTime = str(datetime.now()) # datetime object which is split into two variables.
 rawDigitsTime = totalDateTime[11:]
 rawDigitsDate = totalDateTime[:10]
@@ -76,9 +78,10 @@ def _recordData():
         writer.writerow(dataDict.values())
 
 # You need to allow unidentified apps on an email to use SMTP, ergo uses dummy email for safety
-USEREMAIL = "aaronlearns39@gmail.com"
 parserDate = dataDict["forDate"]
 def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
+    
+        # Type checking
         if not isinstance(text,str):
             raise TypeError("_sendEmail text must be a string")
         elif not isinstance(date,str):
@@ -86,11 +89,13 @@ def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
         elif not isinstance(useremail,str):
             raise TypeError("_sendEmail useremail must be a string.")
 
+        # Starting a simple mail server
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
 
-        serverEmail = 'jclay38craycray@gmail.com'
-        serverPassword = 's3c^h&*2@jl'
+        # Logging in
+        serverEmail = SERVEREMAIL
+        serverPassword = SERVERPASSWORD
         server.login(serverEmail,serverPassword)
 
         months = ("January","February","March","April","May","June",
@@ -104,11 +109,13 @@ def _sendEmail(text,date=parserDate,useremail=USEREMAIL):
         dateText = date
         month = months[int(month) - 1]
         
+        # If there's a 1, write '1st', 2 write '2nd' etc.
         if int(dateText[1]) in [1,2,3] and int(dateText[0]) != 1:
-            suffixNum = int(dateText[1]) - 1 # If there's a 1, write '1st', 2 write '2nd' etc.
+            suffixNum = int(dateText[1]) - 1 
         
+        # Prevent saying "october 08th" for single digit dates.
         if int(dateText) < 10:
-            dateText = dateText[1] # Prevent saying "october 08th" for single digit dates.
+            dateText = dateText[1] 
 
         message = MIMEText('Your casting calls for today have come in! Here are the roles you\'ve matched:\n\n{}'.format(text))
         message['Subject'] = "Your Casting calls for {} {}{}.".format(month,date,suffixes[suffixNum])
